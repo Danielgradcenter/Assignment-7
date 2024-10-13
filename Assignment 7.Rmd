@@ -1,0 +1,139 @@
+---
+title: "Assignment 7"
+output: html_document
+date: "2024-10-13"
+---
+
+```{r setup, include=TRUE}
+#install.packages(c("rvest", "XML", "jsonlite"))
+library(rvest)    # For reading HTML
+library(XML)      # For reading XML
+library(jsonlite) # For reading JSON
+
+
+# Create HTML file
+
+html_content <- '
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+</head>
+<body>
+    <h1>Books</h1>
+    <table border="1">
+        <tr>
+            <th>Title</th>
+            <th>Authors</th>
+            <th>Attributes</th>
+        </tr>
+        <tr>
+            <td>Belly of The Beast: The Politics of Anti-Fatness as Anti-blackness</td>
+            <td>Da’shaun Harrison</td>
+            <td>Interesting, Radical</td>
+        </tr>
+        <tr>
+            <td>Parable of the Sower</td>
+            <td>Octavia E. Butler</td>
+            <td>Breath-taking, Imaginative</td>
+        </tr>
+        <tr>
+            <td>Rising from the Ashes? Labor in the Age of “Global” Capitalism</td>
+            <td>Ellen Meiksins, Peter Meiksins, Michael D. Yates</td>
+            <td>Captivating, open-minded</td>
+        </tr>
+    </table>
+</body>
+</html>
+'
+writeLines(html_content, "books.html")
+html_data <- read_html("books.html")
+html_table <- html_table(html_data)[[1]]
+
+
+
+
+
+
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars, echo=TRUE}
+# Create XML file
+xml_content <- '<?xml version="1.0" encoding="UTF-8"?>
+<books>
+    <book>
+        <title>Belly of The Beast: The Politics of Anti-Fatness as Anti-blackness</title>
+        <authors>Da’shaun Harrison</authors>
+        <attributes>Interesting, Radical</attributes>
+    </book>
+    <book>
+        <title>Parable of the Sower</title>
+        <authors>Octavia E. Butler</authors>
+        <attributes>Breath-taking, Imaginative</attributes>
+    </book>
+    <book>
+        <title>Rising from the Ashes? Labor in the Age of “Global” Capitalism</title>
+        <authors>Ellen Meiksins, Peter Meiksins, Michael D. Yates</authors>
+        <attributes>Captivating, open-minded</attributes>
+    </book>
+</books>'
+writeLines(xml_content, "books.xml")
+xml_data <- xmlParse("books.xml")
+xml_df <- xmlToDataFrame(xml_data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=TRUE}
+# Create JSON file
+json_content <- '[
+    {
+        "title": "Belly of The Beast: The Politics of Anti-Fatness as Anti-blackness",
+        "authors": "Da’shaun Harrison",
+        "attributes": "Interesting, Radical"
+    },
+    {
+        "title": "Parable of the Sower",
+        "authors": "Octavia E. Butler",
+        "attributes": "Breath-taking, Imaginative"
+    },
+    {
+        "title": "Rising from the Ashes? Labor in the Age of “Global” Capitalism",
+        "authors": "Ellen Meiksins, Peter Meiksins, Michael D. Yates",
+        "attributes": "Captivating, open-minded"
+    }
+]'
+writeLines(json_content, "books.json")
+json_data <- fromJSON("books.json")
+
+
+
+
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
